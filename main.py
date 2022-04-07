@@ -15,28 +15,38 @@ with open("comments.json", mode="r", encoding="utf8") as comments:
         comment_user = comment_dict["username"]
         comment_replies = comment_dict["replies"]
 
+        # Asking user if this is a fake comment
         print(f"User: {comment_user}\nComment: {comment}\n")
         fake_or_real = input("Is this a fake comment (Y/N): ")
         
+        # Did the user said it's fake or real?
         if fake_or_real == "y":
+            # If it's fake, add it to the fake_comments list
             fake_comments.append({"username": comment_user, "comment": comment})
         else:
+            # If it's real, add it to the real_comments list
             real_comments.append({"username": comment_user, "comment": comment})
         
-        for reply_dict in comment_dict["replies"]:
+        # Loop through elements in the replies of the comment
+        for reply_dict in comment_replies:
             reply = reply_dict["message"]
             reply_user = reply_dict["username"]
             
+            # Ask user if this is a fake reply (comment)
             print(f"\nUser: {reply_user}\nComment (this is a reply): {reply}\n")
             fake_or_real = input("Is this a fake reply (Y/N): ")
             
+            # Did the user say it's fake or real?
             if fake_or_real == "y":
+                # If it's fake, add it to the fake_comments list
                 fake_comments.append({"username": reply_user, "comment": reply})
             else:
+                # If it's real, add it to the real_comments list
                 real_comments.append({"username": reply_user, "comment": reply})
-            
-print(f"Fake Comments list:\n{fake_comments}\n")
-print(f"Real Comments list:\n{real_comments}\n")
+
+## Print the fake and real comments list     
+# print(f"Fake Comments list:\n{fake_comments}\n")
+# print(f"Real Comments list:\n{real_comments}\n")
 
 # save the fake and real comments lists as JSON files
 with open("fake_comments.json", mode="w") as fake_comments_file:
