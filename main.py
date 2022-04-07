@@ -4,7 +4,7 @@ import json
 fake_comments = []
 real_comments = []
 
-with open("test1.json", mode="r", encoding="utf8") as comments:
+with open("comments.json", mode="r", encoding="utf8") as comments:
     # Data
     data = json.load(comments)
     
