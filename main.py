@@ -39,7 +39,9 @@ print(f"Real Comments list:\n{real_comments}\n")
 
 # save the fake and real comments lists as JSON files
 with open("fake_comments.json", mode="w") as fake_comments_file:
-    json.dumps(fake_comments, fake_comments_file)
+    fake_comments_json = json.dumps(fake_comments)
+    fake_comments_file.write(fake_comments_json)
 
 with open("real_comments.json", mode="w") as real_comments_file:
-    json.dumps(real_comments, real_comments_file)
+    real_comments_json = json.dumps(real_comments)
+    real_comments_file.write(real_comments_json)
