@@ -1,14 +1,15 @@
 import json
 
-# [{username: , comment: }]
+# Lists that will be holding dictionaries.
 fake_comments = []
 real_comments = []
 
+# Opening the comments.json file
 with open("comments.json", mode="r", encoding="utf8") as comments:
-    # Data
+    # reading the data and saving it in a variable
     data = json.load(comments)
     
-    # looping through elements in the data file
+    # Looping through every dictionary element in data variable (comments.json)
     for comment_dict in data:
         comment = comment_dict["message"]
         comment_user = comment_dict["username"]
