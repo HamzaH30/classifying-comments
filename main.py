@@ -1,8 +1,24 @@
 import json
 
+def return_total_comments():
+    sum = 0
+
+    # Opening the comments.json file
+    with open("comments.json", mode="r", encoding="utf8") as comments:
+        data = json.load(comments)
+        
+        sum += len(data)
+        
+        for comment_value in data:
+            sum += len(comment_value["replies"])
+            
+    return sum
+
 # Lists that will be holding dictionaries.
 fake_comments = []
 real_comments = []
+
+iteration = 0
 
 # Opening the comments.json file
 with open("comments.json", mode="r", encoding="utf8") as comments:
@@ -15,9 +31,16 @@ with open("comments.json", mode="r", encoding="utf8") as comments:
         comment_user = comment_dict["username"]
         comment_replies = comment_dict["replies"]
 
+
         # Asking user if this is a fake comment
         print(f"User: {comment_user}\nComment: {comment}\n")
-        fake_or_real = input("Is this a fake comment (Y/N): ")
+        answered = False
+        while answered is False:
+            fake_or_real = input("Is this a fake comment (Y/N): ").lower()
+            if (fake_or_real != "y") and (fake_or_real != "n"):
+                answered = False
+            else:
+                answered = True
         
         # Did the user said it's fake or real?
         if fake_or_real == "y":
@@ -27,14 +50,25 @@ with open("comments.json", mode="r", encoding="utf8") as comments:
             # If it's real, add it to the real_comments list
             real_comments.append({"username": comment_user, "comment": comment})
         
+        iteration += 1
+        print(f"You have done {iteration} comments so far. You have {return_total_comments() - iteration} comments left. \n\n")
+        
         # Loop through elements in the replies of the comment
         for reply_dict in comment_replies:
+            
+            
             reply = reply_dict["message"]
             reply_user = reply_dict["username"]
             
             # Ask user if this is a fake reply (comment)
             print(f"\nUser: {reply_user}\nComment (this is a reply): {reply}\n")
-            fake_or_real = input("Is this a fake reply (Y/N): ")
+            answered = False
+            while answered is False:
+                fake_or_real = input("Is this a fake comment (Y/N): ").lower()
+                if (fake_or_real != "y") and (fake_or_real != "n"):
+                    answered = False
+                else:
+                    answered = True
             
             # Did the user say it's fake or real?
             if fake_or_real == "y":
@@ -43,6 +77,10 @@ with open("comments.json", mode="r", encoding="utf8") as comments:
             else:
                 # If it's real, add it to the real_comments list
                 real_comments.append({"username": reply_user, "comment": reply})
+                
+            iteration += 1
+                
+            print(f"You have done {iteration} comments so far. You have {return_total_comments() - iteration} comments left. \n\n")
 
 ## Print the fake and real comments list     
 # print(f"Fake Comments list:\n{fake_comments}\n")
